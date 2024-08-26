@@ -28,7 +28,9 @@ sunset_time = dt.datetime.fromtimestamp(response["sys"]["sunset"], dt.UTC)
 
 print(f"Temperature in {CITY}: {temp_celsius:.2f}ºC or {temp_fahrenheit:.2f}ºF")
 print(
-    f"Temperature in {CITY} feels like: {feels_like_celsius:.2f}ºC or {feels_like_fahrenheit:.2f}ºF"
+    f"Temperature in {CITY} feels like: "
+    f"{feels_like_celsius:.2f}ºC or "
+    f"{feels_like_fahrenheit:.2f}ºF"
 )
 print(f"Humidity in {CITY}: {humidity}%")
 print(f"Wind speed in {CITY}: {wind_speed}m/s")
