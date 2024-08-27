@@ -7,32 +7,31 @@ API_KEY = open("api_key.txt", "r").read()
 
 city = input(str("Select the location desired: "))
 
+unit = input("Select your desired unit (standard, metric or imperial): ")
+while unit != "standard" and unit != "metric" and unit != "imperial":
+    unit = input(str("Error selecting unit, try again (standard, metric or imperial)"))
 
-def kelvin_to_celsius_fahrenheit(kelvin):
-    celsius = kelvin - 273.15
-    fahrenheit = celsius * (9 / 5) + 32
-    return celsius, fahrenheit
-
-
-url = BASE_URL + "appid=" + API_KEY + "&q=" + city
+url = BASE_URL + "appid=" + API_KEY + "&q=" + city + "&units=" + unit
 response = requests.get(url).json()
 
-temp_kelvin = response["main"]["temp"]
-temp_celsius, temp_fahrenheit = kelvin_to_celsius_fahrenheit(temp_kelvin)
-fls_lk_kelvin = response["main"]["feels_like"]
-feels_like_celsius, feels_like_fahrenheit = kelvin_to_celsius_fahrenheit(fls_lk_kelvin)
+temp = response["main"]["temp"]
+feels_like = response["main"]["feels_like"]
 wind_speed = response["wind"]["speed"]
 humidity = response["main"]["humidity"]
 description = response["weather"][0]["description"]
 sunrise_time = dt.datetime.fromtimestamp(response["sys"]["sunrise"], dt.UTC)
 sunset_time = dt.datetime.fromtimestamp(response["sys"]["sunset"], dt.UTC)
 
-print(f"Temperature in {city}: {temp_celsius:.2f}ºC or {temp_fahrenheit:.2f}ºF")
-print(
-    f"Temperature in {city} feels like: "
-    f"{feels_like_celsius:.2f}ºC or "
-    f"{feels_like_fahrenheit:.2f}ºF"
-)
+if unit == "standard":
+    print(f"Temperature in {city}: {temp:.2f}°K")
+    print(f"Temperature in {city} feels like: {feels_like:.2f}°K")
+elif unit == "metric":
+    print(f"Temperature in {city}: {temp:.2f}°C")
+    print(f"Temperature in {city} feels like: {feels_like:.2f}°C")
+else:
+    print(f"Temperature in {city}: {temp:.2f}°F")
+    print(f"Temperature in {city} feels like: {feels_like:.2f}°F")
+
 print(f"Humidity in {city}: {humidity}%")
 print(f"Wind speed in {city}: {wind_speed}m/s")
 print(f"General weather in {city}: {description}")
