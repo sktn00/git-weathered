@@ -1,2 +1,5 @@
 .venv/
 api_key.txt
+build/
+dist/
+main.spec
